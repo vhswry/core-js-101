@@ -203,8 +203,23 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const sumbol = {
+    tl: '┌',
+    tr: '┐',
+    bl: '└',
+    br: '┘',
+    h: '─',
+    v: '│',
+    s: ' ',
+  };
+  const hasWidth = width > 2;
+  const getTop = () => `${sumbol.tl}${hasWidth ? sumbol.h.repeat(width - 2) : ''}${sumbol.tr}\n`;
+  const getBottom = () => `${sumbol.bl}${hasWidth ? sumbol.h.repeat(width - 2) : ''}${sumbol.br}\n`;
+  const getBody = () => (height > 2
+    ? `${sumbol.v}${hasWidth ? sumbol.s.repeat(width - 2) : ''}${sumbol.v}\n`.repeat(height - 2)
+    : '');
+  return getTop() + getBody() + getBottom();
 }
 
 
