@@ -516,16 +516,16 @@ function distinct(arr) {
  * @return {Map}
  *
  * @example
- *   group([
- *      { country: 'Belarus', city: 'Brest' },
- *      { country: 'Russia', city: 'Omsk' },
- *      { country: 'Russia', city: 'Samara' },
- *      { country: 'Belarus', city: 'Grodno' },
- *      { country: 'Belarus', city: 'Minsk' },
- *      { country: 'Poland', city: 'Lodz' }
- *     ],
- *     item => item.country,
- *     item => item.city
+    group([
+       { country: 'Belarus', city: 'Brest' },
+       { country: 'Russia', city: 'Omsk' },
+       { country: 'Russia', city: 'Samara' },
+       { country: 'Belarus', city: 'Grodno' },
+       { country: 'Belarus', city: 'Minsk' },
+       { country: 'Poland', city: 'Lodz' }
+      ],
+      item => item.country,
+      item => item.city
  *   )
  *            =>
  *   Map {
@@ -534,8 +534,17 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  return array.reduce((res, el) => {
+    const key = keySelector(el);
+    const value = valueSelector(el);
+    if (!res.has(key)) {
+      res.set(key, [value]);
+    } else {
+      res.set(key, res.get(key).concat(value));
+    }
+    return res;
+  }, new Map());
 }
 
 
